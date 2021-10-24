@@ -65,14 +65,13 @@ for j in range(1, n_t ):
     b_0_vec = np.zeros((n_x + 1, 1))
     b_1_vec = np.zeros((n_x + 1, 1))
     f_vec = np.zeros((n_x + 1, 1))
+    b_0_vec[0, 0] = beta0(t_i)
+    b_0_vec[n_x, 0] = beta1(t_i)
+    t_i += tau
     x_i = 0
     for i in range(1, n_x):
         f_vec[i, 0] = tau * f(t_i, x_i)
         x_i += h
-
-    b_0_vec[0, 0] = beta0(t_i)
-    b_0_vec[n_x, 0] = beta1(t_i)
-    t_i += tau
     b_1_vec[0, 0] = beta0(t_i)
     b_1_vec[n_x, 0] = beta1(t_i)
     U_t_x[j] = (np.dot(inv(H),((U_t_x[j - 1]).reshape((n_x + 1, 1)) + b_1_vec - b_0_vec + f_vec))).reshape((n_x + 1))
